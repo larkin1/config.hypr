@@ -1,4 +1,4 @@
-local M = require("hyprland.vars")
+local M = require("lua.vars")
 
 -- program shortcuts
 hl.bind(M.mainMod .. " + Q", hl.dsp.exec_cmd(M.terminal))

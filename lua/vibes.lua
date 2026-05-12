@@ -1,4 +1,4 @@
-local C = require("hyprland.mocha")
+local C = require("lua.mocha")
 
 hl.config({
   general = {

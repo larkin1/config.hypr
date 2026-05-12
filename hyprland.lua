@@ -1,3 +1,6 @@
 require("hyprland.monitors")
 require("hyprland.vibes")
+require("hyprland.bindings")
 require("hyprland.startup")
+require("hyprland.env")
+require("hyprland.rules")

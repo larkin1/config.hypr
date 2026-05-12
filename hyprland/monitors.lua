@@ -16,7 +16,7 @@ hl.monitor({
 hl.monitor({
   output = "DP-3",
   mode = "highrr",
-  position = "-1920x0",
+  position = "-1080x0",
   scale = "1",
   transform = 3,
 })

@@ -16,10 +16,10 @@ hl.bind(M.mainMod .. " + B", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(M.mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
 -- resizing windows
-hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = 50 }), { repeating = true })
-hl.bind(M.mainMod .. " + O", hl.dsp.window.resize({ x = 0, y = -50 }), { repeating = true })
-hl.bind(M.mainMod .. " + P", hl.dsp.window.resize({ x = 50, y = 0 }), { repeating = true })
-hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = -50, y = 0 }), { repeating = true })
+hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + O", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + P", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
 
 -- move between windows
 hl.bind(M.mainMod .. " + H", hl.dsp.focus({ direction = "l" }), { repeating = true })
@@ -56,4 +56,3 @@ hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = tr
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
-

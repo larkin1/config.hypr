@@ -6,6 +6,6 @@ M.fileManager = "thunar"
 M.runMenu = "rofi -show drun"
 
 -- Keybinds
-M.mainMod = "ALT"
+M.mainMod = "SUPER"
 
 return M

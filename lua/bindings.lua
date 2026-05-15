@@ -6,7 +6,9 @@ hl.bind(M.mainMod .. " + E", hl.dsp.exec_cmd(M.fileManager))
 hl.bind(M.mainMod .. " + R", hl.dsp.exec_cmd(M.runMenu))
 
 -- clipboard
-hl.bind(M.mainMod .. " + S", hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy -t image/png"))
+-- hl.bind(M.mainMod .. " + S", hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy -t image/png"))
+local cmd = [=[grim -g "$(slurp)" - | wl-copy -t image/png && action=$(dunstify "Screenshot taken" "Click to edit" -t 10000 --action="edit,Edit") && [[ "$action" == "edit" ]] && wl-paste | satty --filename - --output-filename "$HOME/Pictures/Screenshots/$(date '+%Y%m%d-%H%M%S').png"]=]
+hl.bind(M.mainMod .. " + S", hl.dsp.exec_cmd(cmd))
 hl.bind(M.mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"))
 
 -- window commands

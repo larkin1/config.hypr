@@ -7,6 +7,7 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - hyprland
  - hyprpaper
  - hypridle
+ - rose-pine-hyprcursor (aur)
  - waybar
  - grim
  - slurp

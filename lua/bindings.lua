@@ -4,7 +4,8 @@ local M = require("lua.vars")
 hl.bind(M.mainMod .. " + Q", hl.dsp.exec_cmd(M.terminal))
 hl.bind(M.mainMod .. " + E", hl.dsp.exec_cmd(M.fileManager))
 hl.bind(M.mainMod .. " + R", hl.dsp.exec_cmd(M.runMenu))
-hl.bind(M.mainMod .. " + SEMICOLON", hl.dsp.exec_cmd("bemoji"))
+hl.bind(M.mainMod .. " + SEMICOLON", hl.dsp.exec_cmd('BEMOJI_PICKER_CMD="$HOME/.config/hypr/scripts/fuzzel-emoji-picker.sh" bemoji'))
+
 
 -- clipboard
 -- hl.bind(M.mainMod .. " + S", hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy -t image/png"))

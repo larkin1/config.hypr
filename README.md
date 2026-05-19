@@ -17,4 +17,4 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - dunst
  - ghostty
  - thunar
- - rofi
+ - fuzzel

@@ -3,7 +3,7 @@ local M = {}
 -- Programs
 M.terminal = "ghostty"
 M.fileManager = "thunar"
-M.runMenu = "rofi -show drun"
+M.runMenu = "fuzzel"
 
 -- Keybinds
 M.mainMod = "SUPER"

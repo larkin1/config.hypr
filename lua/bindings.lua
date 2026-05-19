@@ -4,6 +4,7 @@ local M = require("lua.vars")
 hl.bind(M.mainMod .. " + Q", hl.dsp.exec_cmd(M.terminal))
 hl.bind(M.mainMod .. " + E", hl.dsp.exec_cmd(M.fileManager))
 hl.bind(M.mainMod .. " + R", hl.dsp.exec_cmd(M.runMenu))
+hl.bind(M.mainMod .. " + SEMICOLON", hl.dsp.exec_cmd("bemoji"))
 
 -- clipboard
 -- hl.bind(M.mainMod .. " + S", hl.dsp.exec_cmd("grim -g \"$(slurp -d)\" - | wl-copy -t image/png"))

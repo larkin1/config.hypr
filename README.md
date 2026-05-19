@@ -18,3 +18,6 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - ghostty
  - thunar
  - fuzzel
+ - bemoji (aur)
+ - noto-fonts-emoji
+ - ttf-jetbrains-mono-nerd

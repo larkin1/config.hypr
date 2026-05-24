@@ -21,13 +21,14 @@ hl.bind(M.mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
 
 -- resizing windows
-hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
-hl.bind(M.mainMod .. " + O", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
-hl.bind(M.mainMod .. " + P", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
-hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + O", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+hl.bind(M.mainMod .. " + Y", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
 
 -- keys and directios for moving
 local dirkeys = {"H", "J", "K", "L"}
+local altdirkeys = {"Y", "U", "I", "O"}
 local dirs = {"l", "d", "u", "r"}
 
 -- move between windows
@@ -69,8 +70,12 @@ local function swap_with_monitor(dir)
 end
 
 for i, key in ipairs(dirkeys) do
-  hl.bind(M.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dirs[i] }), { repeating = true })
   hl.bind(M.mainMod .. " + CTRL + " .. key, swap_with_monitor(dirs[i]))
+end
+
+-- moving workspaces
+for i, key in ipairs(altdirkeys) do
+  hl.bind(M.mainMod .. " + CTRL + " .. key, hl.dsp.workspace.move({ monitor = dirs[i] }))
 end
 
 -- mouse commands

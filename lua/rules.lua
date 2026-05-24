@@ -38,3 +38,14 @@ hl.window_rule({
   opacity = 0.75,
   match = { class = "^(Rofi)$" },
 })
+
+-- i hate microsoft
+hl.window_rule({
+  name = "fixMSProducts",
+  no_focus = true,
+  float = true,
+  match = {
+    class = "^(microsoft-edge)$",
+    title = "^()$",
+  }
+})

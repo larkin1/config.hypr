@@ -19,29 +19,58 @@ hl.bind(M.mainMod .. " + SHIFT + C", hl.dsp.window.kill())
 hl.bind(M.mainMod .. " + B", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(M.mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
+
 -- resizing windows
 hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
 hl.bind(M.mainMod .. " + O", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
 hl.bind(M.mainMod .. " + P", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
 hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
 
+-- keys and directios for moving
+local dirkeys = {"H", "J", "K", "L"}
+local dirs = {"l", "d", "u", "r"}
+
 -- move between windows
-hl.bind(M.mainMod .. " + H", hl.dsp.focus({ direction = "l" }), { repeating = true })
-hl.bind(M.mainMod .. " + L", hl.dsp.focus({ direction = "r" }), { repeating = true })
-hl.bind(M.mainMod .. " + K", hl.dsp.focus({ direction = "u" }), { repeating = true })
-hl.bind(M.mainMod .. " + J", hl.dsp.focus({ direction = "d" }), { repeating = true })
+for i, key in ipairs(dirkeys) do
+  hl.bind(M.mainMod .. " + " .. key, hl.dsp.focus({ direction = dirs[i] }), { repeating = true })
+end
 
 -- move windows
-hl.bind(M.mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "l" }), { repeating = true })
-hl.bind(M.mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "r" }), { repeating = true })
-hl.bind(M.mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "u" }), { repeating = true })
-hl.bind(M.mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "d" }), { repeating = true })
+for i, key in ipairs(dirkeys) do
+  hl.bind(M.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dirs[i] }), { repeating = true })
+end
 
 -- workspace commands
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
-    hl.bind(M.mainMod .. " + " .. key, hl.dsp.focus({ workspace = i}))
+    hl.bind(M.mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
     hl.bind(M.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+end
+
+-- swapping monitors
+local function swap_with_monitor(dir)
+    return function()
+        local active = assert(hl.get_active_monitor()) --[[@as HL.Monitor]]
+        local monitors = hl.get_monitors()
+        if #monitors == 2 then
+            local other = monitors[1].name == active.name and monitors[2] or monitors[1]
+            hl.dispatch(hl.dsp.workspace.swap_monitors({ monitor1 = active.name, monitor2 = other.name }))
+            return
+        end
+        local offset = {
+            x = active.x + (dir == "r" and active.width  or dir == "l" and -1 or 0),
+            y = active.y + (dir == "d" and active.height or dir == "u" and -1 or 0),
+        }
+        local other = hl.get_monitor_at(offset.x, active.y + (active.height / 2))
+        if other then
+            hl.dispatch(hl.dsp.workspace.swap_monitors({ monitor1 = active.name, monitor2 = other.name }))
+        end
+    end
+end
+
+for i, key in ipairs(dirkeys) do
+  hl.bind(M.mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = dirs[i] }), { repeating = true })
+  hl.bind(M.mainMod .. " + CTRL + " .. key, swap_with_monitor(dirs[i]))
 end
 
 -- mouse commands

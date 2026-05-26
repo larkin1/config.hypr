@@ -65,29 +65,54 @@ get_time() {
   printf "" | fuzzel \
     --dmenu \
     --prompt="When: " \
-    --placeholder="13:55 | now + 10 minutes" \
+    --placeholder="hh:mm | yyyy-mm-dd hh:mm | 10h/m" \
     --lines=10 \
     --minimal-lines \
     --width=$width \
     --match-mode=exact
 }
 
-while :; do
-  time=$(get_time)
+span_to_phrase() {
+  case $1 in
+    *s) printf '%ssec' "${1%s}" ;;
+    *m) printf '%smin' "${1%m}" ;;
+    *h) printf '%shour' "${1%h}" ;;
+    *) return 1 ;;
+  esac
+}
 
-  if [ -z "$time" ]; then
+while :; do
+  rawtime=$(get_time)
+  if [ -z "$rawtime" ]; then
     dunstify "Reminder Not Set" "Reason: User Quit"
     exit 0
   fi
-
-  if echo ":" | at ${time} 2> /tmp/at_err; then
+  if systemd-analyze calendar "$rawtime" >/dev/null 2>&1; then
+    if [[ $rawtime =~ ^[0-9]{2}:[0-9]{2}(:[0-9]{2})?$ ]]; then
+      pretty_time=$(date -d "$rawtime" '+%F %T')
+      if [[ $(date -d "$pretty_time" +%s) -le $(date +%s) ]]; then
+        pretty_time=$(date -d "tomorrow $rawtime" '+%F %T')
+      fi
+      time="--on-calendar=$pretty_time"
+    else
+      pretty_time=$(date -d "$rawtime" '+%F %T')
+      time="--on-calendar=$rawtime"
+    fi
+    break
+  elif systemd-analyze timespan "$rawtime" >/dev/null 2>&1; then
+    time="--on-active=$rawtime"
+    pretty_time=$(date -d "$(span_to_phrase "$rawtime")" '+%F %T')
     break
   else
-    err=$(< /tmp/at_err)
-    dunstify "Failed to set reminder" "$err"
+    dunstify "Failed to set reminder" "Invalid format: $rawtime"
   fi
 done
 
-out=$(echo "dunstify \"${title}\" \"Click to dismiss\" -u critical -t 0; ${action}" | at -v ${time} 2>&1)
-time=${out%%$'\n'*}
-dunstify "New Reminder Set" "Will occur at ${time}\nExecutes: ${action}"
+cmd=$(printf 'dunstify %q %q -u critical -t 0; %s' \
+  "$title" "Click to dismiss" "$action")
+
+if systemd-run --user "$time" bash -lc "$cmd" >/dev/null 2>&1; then
+  dunstify "New Reminder Set" "Will occur at ${pretty_time}\nExecutes: ${action}"
+else
+  dunstify "Failed to set reminder" "systemd-run failed"
+fi

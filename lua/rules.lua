@@ -49,3 +49,16 @@ hl.window_rule({
     title = "^()$",
   }
 })
+
+hl.on("window.open", function (w)
+  local f = io.open("/proc/" .. w.pid .. "/comm", "r")
+  if not f then; return; end
+  local name = f:read("*l")
+  f:close()
+  if name == "msedge" and w.class == "" and w.title == "" then
+    hl.dispatch(hl.dsp.window.float({
+      float = true,
+      window = w.address,
+    }))
+  end
+end)

@@ -24,3 +24,4 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - libnotify
  - fd
  - bluez, bluez-libs, bluez-utils
+ - jq

@@ -1,7 +1,7 @@
 width=50
 title=$(printf "" | fuzzel --dmenu --prompt="Title: " --placeholder="Important Meeting" --lines=10 --minimal-lines --width=${width})
 if [ -z "$title" ]; then
-  notify-send "Reminder Not Set" "Reason: User Quit"
+  notify-send "Reminder exiting" "Reason: User Quit"
   exit 0
 fi
 
@@ -84,7 +84,7 @@ span_to_phrase() {
 while :; do
   rawtime=$(get_time)
   if [ -z "$rawtime" ]; then
-    notify-send "Reminder Not Set" "Reason: User Quit"
+    notify-send "Reminder exiting" "Reason: User Quit"
     exit 0
   fi
   if systemd-analyze calendar "$rawtime" >/dev/null 2>&1; then
@@ -104,7 +104,7 @@ while :; do
     pretty_time=$(date -d "$(span_to_phrase "$rawtime")" '+%F %T')
     break
   else
-    notify-send "Failed to set reminder" "Invalid format: $rawtime"
+    notify-send "Reminder" "Invalid format: $rawtime"
   fi
 done
 
@@ -114,5 +114,5 @@ cmd=$(printf 'notify-send %q %q -u critical -t 0; %s' \
 if systemd-run --user "$time" bash -lc "$cmd" >/dev/null 2>&1; then
   notify-send "New Reminder Set" "Will occur at ${pretty_time}\nExecutes: ${action}"
 else
-  notify-send "Failed to set reminder" "systemd-run failed"
+  notify-send "Reminder error" "systemd-run failed"
 fi

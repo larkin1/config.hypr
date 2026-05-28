@@ -5,7 +5,7 @@ opt=""
 
 while [ -z "$opt" ]; do
   opt=$(
-    printf "reminder\npower\n" | fuzzel --dmenu \
+    printf "reminder\npower\nbluetooth" | fuzzel --dmenu \
     --prompt="Action: " \
     --placeholder="Enter an action..." \
     --lines=10 \
@@ -23,6 +23,9 @@ while [ -z "$opt" ]; do
     ;;
     power)
       "$SCRIPT_DIR/power.sh"
+    ;;
+    bluetooth)
+      "$SCRIPT_DIR/bluetooth.sh"
     ;;
     *)
       notify-send "Run menu error" "Incorrect action"

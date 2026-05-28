@@ -1,10 +1,11 @@
-# set -euo pipefail
+#!/usr/bin/env bash
+set -uo pipefail
 width=50
 opt=""
 
 while [ -z "$opt" ]; do
   opt=$(
-    printf "poweroff\nreboot\nsleep\nsuspend\nhibernate" | fuzzel --dmenu \
+    printf "poweroff\nreboot\nsleep\nhibernate" | fuzzel --dmenu \
     --prompt="Action: " \
     --placeholder="Enter an action..." \
     --lines=10 \
@@ -24,13 +25,10 @@ while [ -z "$opt" ]; do
       systemctl hibernate
     ;;
     sleep)
-      systemctl hibernate
+      systemctl sleep
     ;;
     reboot)
       systemctl reboot
-    ;;
-    suspend)
-      systemctl suspend
     ;;
     *)
       notify-send "Power menu error" "Incorrect action"

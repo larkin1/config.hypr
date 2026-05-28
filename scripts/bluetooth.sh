@@ -1,4 +1,5 @@
-# set -euo pipefail
+#!/usr/bin/env bash
+set -uo pipefail
 width=50
 opt=""
 
@@ -32,7 +33,7 @@ while [ -z "$opt" ]; do
       conn=$(
         echo "$devices" | fuzzel --dmenu \
           --prompt="Select a device: " \
-          --placeholder="Selet to connect..." \
+          --placeholder="Select to connect..." \
           --lines=10 \
           --minimal-lines \
           --width=$width
@@ -53,7 +54,7 @@ while [ -z "$opt" ]; do
     "connect existing")
       devices=$(
         bluetoothctl devices 2>/dev/null |
-          grep --line-buffered -oP '[0-9A-F:]{17} .+' |
+          grep -oP '[0-9A-F:]{17} .+' |
           sort -u
       )
       if [ -z "$devices" ]; then
@@ -63,7 +64,7 @@ while [ -z "$opt" ]; do
       conn=$(
         echo "$devices" | fuzzel --dmenu \
           --prompt="Select a device: " \
-          --placeholder="Selet to connect..." \
+          --placeholder="Select to connect..." \
           --lines=10 \
           --minimal-lines \
           --width=$width

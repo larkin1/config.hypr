@@ -21,3 +21,6 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - bemoji (aur)
  - noto-fonts-emoji
  - ttf-jetbrains-mono-nerd
+ - libnotify
+ - fd
+ - bluez, bluez-libs, bluez-utils

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+set -uo pipefail
 width=50
 title=$(printf "" | fuzzel --dmenu --prompt="Title: " --placeholder="Important Meeting" --lines=10 --minimal-lines --width=${width})
 if [ -z "$title" ]; then
@@ -77,6 +79,8 @@ span_to_phrase() {
     *s) printf '%ssec' "${1%s}" ;;
     *m) printf '%smin' "${1%m}" ;;
     *h) printf '%shour' "${1%h}" ;;
+    *d) printf '%sday' "${1%d}" ;;
+    *w) printf '%sweek' "${1%w}" ;;
     *) return 1 ;;
   esac
 }

@@ -9,7 +9,8 @@ dev=$(
     --placeholder="Select to set as output..." \
     --lines=10 \
     --minimal-lines \
-    --width=$width
+    --width=$width \
+    --with-nth=2
 )
 
 if [ -z "$dev" ]; then

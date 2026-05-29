@@ -69,12 +69,12 @@ local function swap_with_monitor(dir)
     end
 end
 
-for i, key in ipairs(dirkeys) do
+for i, key in ipairs(altdirkeys) do
   hl.bind(M.mainMod .. " + CTRL + " .. key, swap_with_monitor(dirs[i]))
 end
 
 -- moving workspaces
-for i, key in ipairs(altdirkeys) do
+for i, key in ipairs(dirkeys) do
   hl.bind(M.mainMod .. " + CTRL + " .. key, hl.dsp.workspace.move({ monitor = dirs[i] }))
 end
 

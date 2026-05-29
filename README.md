@@ -16,7 +16,7 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - cliphist
  - dunst
  - ghostty
- - thunar
+ - yazi
  - fuzzel
  - bemoji (aur)
  - noto-fonts-emoji

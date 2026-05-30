@@ -85,6 +85,7 @@ case $choice in
         notify-send "File menu" "File not removed"
         ;;
     esac
+    ;;
   *)
     desktop="$(echo "$choice" | grep -oP '\(\K[^)]+\.desktop')"
     gtk-launch "$desktop" "$file"

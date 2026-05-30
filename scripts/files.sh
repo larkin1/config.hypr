@@ -3,8 +3,6 @@ set -uo pipefail
 width=50
 
 file="$(fd . "/" --type f | fuzzel --dmenu \
-  --delayed-filter-limit=50 \
-  --hide-before-typing \
   --prompt="File: " \
   --placeholder=\"$HOME/file\" \
   --lines=5 \
@@ -14,6 +12,11 @@ file="$(fd . "/" --type f | fuzzel --dmenu \
 
 if [ -z "$file" ]; then
   notify-send "File menu exiting" "Reason: User aborted"
+  exit 0
+fi
+
+if ! [ -e "$file" ]; then
+  notify-send "File menu exiting" "Reason: Invalid file name"
   exit 0
 fi
 
@@ -41,7 +44,7 @@ choice="$({
 } | fuzzel --dmenu \
     --prompt="Open with: " \
     --placeholder="Select a program or action" \
-    --lines=5 \
+    --lines=15 \
     --minimal-lines \
     --width=$width
 )"
@@ -69,15 +72,16 @@ case $choice in
     ghostty --working-directory="$(dirname "$file")"
     ;;
   *"Delete"*)
-    confirm=printf "N\nY" | fuzzel --dmenu \
+    confirm=$(printf "N\nY" | fuzzel --dmenu \
       --prompt="Are you sure?: " \
       --placeholder="y/N" \
       --lines=5 \
       --minimal-lines \
       --width=$width
+    )
 
     case $confirm in
-      Y)
+      [Yy])
         rm $file
         notify-send "File menu" "Deleted file: $file"
         ;;

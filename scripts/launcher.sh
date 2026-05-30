@@ -6,7 +6,7 @@ opt=""
 
 while [ -z "$opt" ]; do
   opt=$(
-    printf "reminder\npower\nbluetooth\nsinks\nmedia" | fuzzel --dmenu \
+    printf "reminder\npower\nbluetooth\nsinks\nmedia\nfiles" | fuzzel --dmenu \
     --prompt="Action: " \
     --placeholder="Enter an action..." \
     --lines=10 \
@@ -33,6 +33,9 @@ while [ -z "$opt" ]; do
     ;;
     media)
       "$SCRIPT_DIR/media.sh"
+    ;;
+    files)
+      "$SCRIPT_DIR/files.sh"
     ;;
     *)
       notify-send "Run menu error" "Incorrect action"

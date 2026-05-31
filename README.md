@@ -25,3 +25,4 @@ Install these (ya silly goose) ((you don't haave to, but for everything to work 
  - fd
  - bluez, bluez-libs, bluez-utils
  - jq
+ - plocate

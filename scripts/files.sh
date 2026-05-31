@@ -1,15 +1,38 @@
 #!/usr/bin/env bash
 set -uo pipefail
 width=50
+CACHE="$HOME/.cache/plocate-user.db"
 
-file="$(fd . "/" --type f -H \
-  -E '.git' \
-  -E 'node_modules' \
-  -E '.cache' \
-  -E 'proc' \
-  -E 'sys' \
-  -E 'dev' \
-  -E 'run' | fuzzel --dmenu \
+if command -v locate &>/dev/null; then
+  if sudo -n updatedb &>/dev/null 2>&1; then
+    if [[ ! -f /var/lib/plocate/plocate.db ]]; then
+      sudo updatedb
+    else
+      sudo updatedb &
+    fi
+    file_list() { locate /; }
+  else
+    if [[ ! -f "$CACHE" ]]; then
+      updatedb -l 0 -o "$CACHE" -U /
+    else
+      updatedb -l 0 -o "$CACHE" -U / &
+    fi
+    file_list() { locate -d "$CACHE" /; }
+  fi
+
+else
+  file_list() { fd . "/" --type f -H \
+    -E '.git' \
+    -E 'node_modules' \
+    -E '.cache' \
+    -E 'proc' \
+    -E 'sys' \
+    -E 'dev' \
+    -E 'run';
+  }
+fi
+
+file="$(file_list | fuzzel --dmenu \
   --prompt="File: " \
   --placeholder=\"$HOME/file\" \
   --lines=5 \

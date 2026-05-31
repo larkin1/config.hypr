@@ -19,25 +19,22 @@ while [ -z "$opt" ]; do
 
   case "$opt" in
     search)
-      SCAN_DURATION=5
-      notify-send "Bluetooth menu status" "Now Scanning..." -t $(($SCAN_DURATION * 1000))
-      devices=$(
-        bluetoothctl --timeout $SCAN_DURATION scan on 2>/dev/null |
-          grep --line-buffered -oP '(?<=\[NEW\] Device )[0-9A-F:]{17} .+' |
-          sort -u
-      )
-      if [ -z "$devices" ]; then
-        notify-send "Bluetooth menu error" "No devices found after scan"
-        exit 0
-      fi
-      conn=$(
-        echo "$devices" | fuzzel --dmenu \
+      conn="$(
+        {
+          bluetoothctl devices \
+            | sed -u 's/\x1b\[[0-9;]*m//g' \
+            | grep -oP 'Device\s+\K[0-9A-F:]{17}\s+.+'
+          bluetoothctl --timeout 10 scan on \
+            | sed -u 's/\x1b\[[0-9;]*m//g' \
+            | grep --line-buffered -oP '\[NEW\]\s+Device\s+\K[0-9A-F:]{17}\s+.+'
+        } | fuzzel --dmenu \
           --prompt="Select a device: " \
           --placeholder="Select to connect..." \
           --lines=10 \
-          --minimal-lines \
           --width=$width
-      )
+      )" || exit 0
+      [ -z "$conn" ] && exit 0
+
       mac=$(echo "$conn" | awk '{print $1}')
 
       if bluetoothctl info "$mac" | grep -q "Connected: yes"; then

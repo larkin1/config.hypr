@@ -2,12 +2,18 @@
 set -uo pipefail
 width=50
 
-file="$(fd . "/" --type f | fuzzel --dmenu \
+file="$(fd . "/" --type f -H \
+  -E '.git' \
+  -E 'node_modules' \
+  -E '.cache' \
+  -E 'proc' \
+  -E 'sys' \
+  -E 'dev' \
+  -E 'run' | fuzzel --dmenu \
   --prompt="File: " \
   --placeholder=\"$HOME/file\" \
   --lines=5 \
   --minimal-lines \
-  --width=$width \
   --search="${HOME}/")"
 
 if [ -z "$file" ]; then

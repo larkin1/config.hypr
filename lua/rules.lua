@@ -39,6 +39,16 @@ hl.window_rule({
   match = { class = "^(Rofi)$" },
 })
 
+-- make some layers transparent
+hl.layer_rule({
+  name = "fuzzel trans",
+  blur = true,
+  ignore_alpha = 0, -- stops corner overflow for some reason
+  match = {
+    namespace = "launcher",
+  }
+})
+
 -- i hate microsoft
 hl.window_rule({
   name = "fixMSProducts",

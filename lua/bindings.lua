@@ -19,7 +19,6 @@ hl.bind(M.mainMod .. " + SHIFT + C", hl.dsp.window.kill())
 hl.bind(M.mainMod .. " + B", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(M.mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 
-
 -- resizing windows
 hl.bind(M.mainMod .. " + U", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
 hl.bind(M.mainMod .. " + I", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })

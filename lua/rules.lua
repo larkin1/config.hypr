@@ -72,3 +72,14 @@ hl.on("window.open", function (w)
     }))
   end
 end)
+
+-- i also hate zoom
+hl.window_rule({
+  name = "remove annotate toolbar",
+  no_focus = true,
+  float = true,
+  match = {
+    class = "zoom",
+    title = "annotate_toolbar",
+  },
+})

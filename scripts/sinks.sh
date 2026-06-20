@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -uo pipefail
 width=50
-sinks=$(pactl --format json list sinks | jq -r '.[] | [.index, .properties["device.description"]] | @tsv')
+sinks=$(pw-dump | jq -r '.[] | select(.type == "PipeWire:Interface:Node" and .info.props.["media.class"] == "Audio/Sink") | [.id, .info.props."node.description"] | @tsv')
+
+notify-send $sinks
 
 dev=$(
   echo "$sinks" | fuzzel --dmenu \
@@ -21,7 +23,7 @@ fi
 idx=$(echo "$dev" | cut -f1)
 desc=$(echo "$dev" | cut -f2)
 
-if pactl set-default-sink "$idx"; then
+if wpctl set-default "$idx"; then
   notify-send "Sinks" "$desc set as default output"
 else
   notify-send "Sinks error" "Failed to set device $desc with id $idx as default output device"

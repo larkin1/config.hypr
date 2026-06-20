@@ -43,7 +43,7 @@ case "$player" in
       fi
     fi
 
-    if pactl set-sink-volume @DEFAULT_SINK@ "$vol"; then
+    if wpctl set-volume @DEFAULT_SINK@ "$vol"; then
       notify-send "Media menu" "Volume set"
     else
       notify-send "Media menu exiting" "Reason: Invalid volume set"

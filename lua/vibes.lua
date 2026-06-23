@@ -11,6 +11,10 @@ hl.config({
     }
   },
 
+  cursor = {
+    no_hardware_cursors = 1,
+  },
+
   decoration = {
     rounding = 8,
     rounding_power = 2.0,

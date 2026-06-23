@@ -51,7 +51,7 @@ hl.config({
   }
 })
 
-cursor {
+hl.cursor {
   no_hardware_cursors = true
 }
 

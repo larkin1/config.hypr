@@ -6,7 +6,7 @@ opt=""
 
 while [ -z "$opt" ]; do
   opt=$(
-    printf "reminder\npower\nbluetooth\nsinks\nmedia\nfiles" | fuzzel --dmenu \
+    printf "power\nbluetooth\nsinks\nfiles\nmedia\nreminder" | fuzzel --dmenu \
     --prompt="Action: " \
     --placeholder="Enter an action..." \
     --lines=10 \
